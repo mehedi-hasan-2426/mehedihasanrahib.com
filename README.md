@@ -25,10 +25,20 @@ Open http://127.0.0.1:4321. Production build: `npm run build`, then `npm run pre
 
 Behind a TLS-inspecting proxy the build-time GitHub fetch may fail; set `$env:NODE_USE_SYSTEM_CA="1"` so Node trusts the Windows certificate store. Without data the tile shows a plain fallback text.
 
+## Automation
+
+- CI runs on every push and pull request, and every Monday by cron, so a broken dependency shows up even without commits.
+- Dependabot opens weekly pull requests for npm packages and GitHub Actions.
+- `dependabot-automerge.yml` turns on auto-merge for minor and patch updates. They merge only after the required `browser tests` check passes. Major updates stay open for a manual look.
+
+## Icons
+
+The GitHub and LinkedIn icons come from Tabler Icons v3.50.0 (MIT, see `LICENSE-tabler-icons.txt`).
+
 ## Edit content
 
 - Projects: one MDX file per project in `src/content/projects`
-- Journey: `src/timeline.ts`
+- Experience, education, skills and languages: `src/cv.ts`
 
 ## Checks
 

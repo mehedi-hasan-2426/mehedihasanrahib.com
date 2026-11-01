@@ -5,11 +5,22 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Mehedi Hasan Rahib");
-  await expect(page.locator("#work article")).toHaveCount(5);
-  await expect(page.locator(".timeline li")).toHaveCount(2);
+  await expect(page.locator("#work article")).toHaveCount(3);
+  await expect(page.locator(".more-projects li")).toHaveCount(2);
+  await expect(page.locator("#experience .timeline li")).toHaveCount(1);
+  await expect(page.locator("#education .timeline li")).toHaveCount(3);
+  await expect(page.locator("#education")).toContainText("Biotechnology studies, discontinued");
+  await expect(page.locator("#education")).toContainText("Hochschule Niederrhein");
+  await expect(page.locator("#education")).toContainText("Studienkolleg");
+  await expect(page.locator("#education")).toContainText("Hochschule Anhalt");
+  await expect(page.locator("#experience")).toContainText("ongoing until 2027");
   await expect(page.locator('a[href*="linkedin"]')).toHaveCount(0);
-  await page.getByRole("link", { name: "See my work" }).click();
-  await expect(page).toHaveURL(/#work$/);
+  await expect(page.locator(".intro .social")).toContainText("LinkedIn: Mehedi Hasan Rahib");
+  const github = page.getByRole("link", { name: "GitHub", exact: true });
+  await expect(github).toHaveAttribute("href", "https://github.com/mehedi-hasan-2426");
+  await expect(github.locator("svg.icon")).toHaveAttribute("aria-hidden", "true");
+  await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Education" }).click();
+  await expect(page).toHaveURL(/#education$/);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
   expect(errors).toEqual([]);
@@ -23,7 +34,7 @@ test("GitHub tile hydrates from the prerendered Hono API without CSP errors", as
   expect(api.ok()).toBe(true);
   const data = await api.json();
   await page.goto("/");
-  const tile = page.locator(".tile.github");
+  const tile = page.locator(".contact .github");
   await tile.scrollIntoViewIfNeeded();
   if (typeof data.publicRepos === "number") {
     await expect(tile.getByTestId("repo-count")).toHaveText(String(data.publicRepos));
