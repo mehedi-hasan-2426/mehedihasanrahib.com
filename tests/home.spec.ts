@@ -15,10 +15,13 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   await expect(page.locator("#education")).toContainText("Hochschule Anhalt");
   await expect(page.locator("#experience")).toContainText("ongoing until 2027");
   await expect(page.locator('a[href*="linkedin"]')).toHaveCount(0);
-  await expect(page.locator(".intro .social")).toContainText("LinkedIn: Mehedi Hasan Rahib");
-  const github = page.getByRole("link", { name: "GitHub", exact: true });
+  const github = page.locator(".intro").getByRole("link", { name: "GitHub profile", exact: true });
   await expect(github).toHaveAttribute("href", "https://github.com/mehedi-hasan-2426");
+  await expect(github).toHaveText("");
   await expect(github.locator("svg.icon")).toHaveAttribute("aria-hidden", "true");
+  const box = await github.boundingBox();
+  expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
+  expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Education" }).click();
   await expect(page).toHaveURL(/#education$/);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
