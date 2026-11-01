@@ -3,7 +3,7 @@ export const experience = [
     when: "Nov 2024 – 2027, ongoing",
     title: "Ausbildung, Fachinformatiker für Anwendungsentwicklung",
     place: "RWE Supply & Trading GmbH, Essen",
-    text: "Apprenticeship in a cloud platform team. Terraform on AWS, Azure DevOps pipelines, security scanning with TFLint and Trivy, IAM policies, monitoring and patch automation with Python and PowerShell.",
+    text: "Training in application development, with practical experience in cloud systems and automation.",
   },
 ];
 
@@ -32,32 +32,35 @@ export type Use = "work" | "projects";
 
 export const skills: { group: string; items: { name: string; use: Use }[] }[] = [
   {
+    group: "Development",
+    items: [
+      { name: "TypeScript", use: "projects" },
+      { name: "Python", use: "work" },
+      { name: "Go", use: "projects" },
+      { name: "Java", use: "projects" },
+      { name: "React", use: "projects" },
+      { name: "Next.js", use: "projects" },
+      { name: "Astro", use: "projects" },
+      { name: "Tailwind CSS", use: "projects" },
+    ],
+  },
+  {
     group: "Cloud & Infrastructure",
     items: [
       { name: "AWS", use: "work" },
       { name: "Terraform", use: "work" },
       { name: "Docker", use: "work" },
-      { name: "Vercel", use: "projects" },
+      { name: "Linux", use: "projects" },
     ],
   },
   {
-    group: "Automation & CI/CD",
+    group: "Automation & Delivery",
     items: [
       { name: "Azure DevOps", use: "work" },
-      { name: "TFLint", use: "work" },
-      { name: "Trivy", use: "work" },
       { name: "GitHub Actions", use: "projects" },
-      { name: "Playwright", use: "projects" },
-    ],
-  },
-  {
-    group: "Programming",
-    items: [
-      { name: "Python", use: "work" },
       { name: "PowerShell", use: "work" },
-      { name: "TypeScript", use: "projects" },
-      { name: "Go", use: "projects" },
       { name: "Bash", use: "projects" },
+      { name: "Vercel", use: "projects" },
     ],
   },
   {
@@ -65,7 +68,20 @@ export const skills: { group: string; items: { name: string; use: Use }[] }[] = 
     items: [
       { name: "SQL", use: "projects" },
       { name: "PostgreSQL", use: "projects" },
+      { name: "SQLite", use: "projects" },
     ],
+  },
+  {
+    group: "Testing & Quality",
+    items: [
+      { name: "Playwright", use: "projects" },
+      { name: "pytest", use: "projects" },
+      { name: "CodeQL", use: "projects" },
+    ],
+  },
+  {
+    group: "Monitoring",
+    items: [{ name: "Elastic Stack", use: "work" }],
   },
 ];
 
