@@ -13,6 +13,14 @@ const projects = defineCollection({
     live: z.url().optional(),
     order: z.number(),
     featured: z.boolean().default(false),
+    problem: z.string().optional(),
+    solution: z.string().optional(),
+    impact: z.string().optional(),
+    architecture: z.array(z.string()).optional(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    imageWidth: z.number().optional(),
+    imageHeight: z.number().optional(),
   }),
 });
 

@@ -5,6 +5,15 @@ status: Learning project
 stack: [Python, Terraform, AWS]
 repo: https://github.com/mehedi-hasan-2426/patchpulse
 order: 2
+featured: true
+problem: Patch dashboards show what is missing, but rarely which machines have stopped reporting at all.
+solution: Checks every EC2 instance against a policy, lists stale scans first and writes one short alert. Runs as a CLI or on an EventBridge schedule in AWS Lambda, deployed with Terraform.
+impact: A learning project tested end to end on a synthetic fleet. The screenshot is the real HTML report for that data.
+architecture: [EventBridge schedule, Lambda handler, Compliance policy, Fleet report, Alert and HTML export]
+image: /projects/patchpulse-report.webp
+imageAlt: PatchPulse HTML report for five synthetic instances, one stale and two non-compliant
+imageWidth: 1040
+imageHeight: 460
 ---
 
 ## Why

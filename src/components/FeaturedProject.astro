@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+const { project } = Astro.props;
+const p = project.data;
+const tone = p.status === "Live" ? "live" : p.status === "Work in progress" ? "wip" : "learning";
+---
+
+<article class="featured-project" data-project={project.id}>
+  {p.image && (
+    <figure class="shot">
+      <img
+        src={p.image}
+        alt={p.imageAlt ?? ""}
+        width={p.imageWidth}
+        height={p.imageHeight}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  )}
+  <div class="featured-body">
+    <p class="badge" data-tone={tone}>
+      {p.status}
+    </p>
+    <h3>{p.name}</h3>
+    <dl class="story">
+      {p.problem && (
+        <div>
+          <dt>Problem</dt>
+          <dd>{p.problem}</dd>
+        </div>
+      )}
+      {p.solution && (
+        <div>
+          <dt>Solution</dt>
+          <dd>{p.solution}</dd>
+        </div>
+      )}
+      {p.impact && (
+        <div>
+          <dt>Result</dt>
+          <dd>{p.impact}</dd>
+        </div>
+      )}
+    </dl>
+    {p.architecture && (
+      <ol class="flow" aria-label={`${p.name} architecture`}>
+        {p.architecture.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ol>
+    )}
+    <ul class="tags" aria-label="Stack">
+      {p.stack.map((s) => (
+        <li>{s}</li>
+      ))}
+    </ul>
+    <p class="project-links">
+      {p.live && (
+        <a class="btn" href={p.live} rel="noopener">
+          Live demo
+        </a>
+      )}
+      <a class="btn ghost" href={p.repo} rel="noopener">
+        GitHub
+      </a>
+      <a class="text-link" href={`/projects/${project.id}`}>
+        Case study
+      </a>
+    </p>
+  </div>
+</article>
