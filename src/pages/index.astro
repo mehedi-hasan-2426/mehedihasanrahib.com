@@ -2,10 +2,11 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import GitHubTile from "../components/GitHubTile.tsx";
-import { timeline } from "../timeline.ts";
+import Icon from "../components/Icon.astro";
+import { education, experience, languages, skills } from "../cv.ts";
 const all = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
-const featured = all.find((p) => p.data.featured);
-const others = all.filter((p) => !p.data.featured);
+const featured = all.slice(0, 3);
+const more = all.slice(3);
 ---
 
 <Base>
@@ -13,73 +14,30 @@ const others = all.filter((p) => !p.data.featured);
     <h1>Mehedi Hasan Rahib</h1>
     <p class="lede">
       Apprentice application developer in Essen, working in a cloud platform team. I build infrastructure with Terraform
-      on AWS, CI pipelines with security checks, and small apps that people actually use.
+      on AWS, CI pipelines with security checks, and small apps that people use.
     </p>
-    <p class="links">
-      <a class="btn" href="#work">
-        See my work
-      </a>
-      <a class="btn ghost" href="https://github.com/mehedi-hasan-2426" rel="noopener">
-        GitHub
-      </a>
-    </p>
-  </section>
-
-  <section class="bento" aria-label="At a glance">
-    <div class="tile now">
-      <h2>Now</h2>
-      <p>Final year of my Ausbildung as Fachinformatiker für Anwendungsentwicklung. IHK exam part 1 passed.</p>
-    </div>
-    <div class="tile place">
-      <h2>Based in</h2>
-      <p class="big">Essen</p>
-      <p>North Rhine-Westphalia, Germany</p>
-    </div>
-    <div class="tile tools">
-      <h2>Daily tools</h2>
-      <ul class="tags">
-        <li>AWS</li>
-        <li>Terraform</li>
-        <li>Azure DevOps</li>
-        <li>Python</li>
-        <li>PowerShell</li>
-        <li>Docker</li>
-        <li>TFLint</li>
-        <li>Trivy</li>
-        <li>Git</li>
-      </ul>
-    </div>
-    <div class="tile langs">
-      <h2>Languages</h2>
-      <p>Bengali, English, German</p>
-    </div>
-    <div class="tile github">
-      <h2>GitHub</h2>
-      <GitHubTile client:visible />
-    </div>
-    <div class="tile learning">
-      <h2>Learning</h2>
-      <p>Preparing for AWS Certified Cloud Practitioner, so I built a trainer for it.</p>
-      <a href="/projects/aws-ccp-trainer">See the trainer</a>
-    </div>
+    <ul class="social" aria-label="Profiles">
+      <li>
+        <a class="social-link" href="https://github.com/mehedi-hasan-2426" rel="noopener">
+          <Icon name="github" />
+          <span>GitHub</span>
+        </a>
+      </li>
+      <li>
+        <span class="social-link static">
+          <Icon name="linkedin" />
+          <span>LinkedIn: Mehedi Hasan Rahib</span>
+        </span>
+      </li>
+    </ul>
   </section>
 
   <section id="work" aria-labelledby="work-title">
     <h2 id="work-title" class="section-title">
-      Selected work
+      Projects
     </h2>
-    {featured && (
-      <article class="card feature">
-        <p class="status">{featured.data.status}</p>
-        <h3>
-          <a href={`/projects/${featured.id}`}>{featured.data.name}</a>
-        </h3>
-        <p>{featured.data.summary}</p>
-        <p class="stack">{featured.data.stack.join(", ")}</p>
-      </article>
-    )}
     <div class="grid">
-      {others.map((p) => (
+      {featured.map((p) => (
         <article class="card">
           <p class="status">{p.data.status}</p>
           <h3>
@@ -90,14 +48,24 @@ const others = all.filter((p) => !p.data.featured);
         </article>
       ))}
     </div>
+    {more.length > 0 && (
+      <ul class="more-projects" aria-label="More projects">
+        {more.map((p) => (
+          <li>
+            <a href={`/projects/${p.id}`}>{p.data.name}</a>
+            <span>{p.data.summary}</span>
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
 
-  <section id="journey" aria-labelledby="journey-title">
-    <h2 id="journey-title" class="section-title">
-      Journey
+  <section id="experience" aria-labelledby="experience-title">
+    <h2 id="experience-title" class="section-title">
+      Experience
     </h2>
     <ol class="timeline">
-      {timeline.map((t) => (
+      {experience.map((t) => (
         <li>
           <p class="when">{t.when}</p>
           <h3>{t.title}</h3>
@@ -108,21 +76,51 @@ const others = all.filter((p) => !p.data.featured);
     </ol>
   </section>
 
+  <section id="education" aria-labelledby="education-title">
+    <h2 id="education-title" class="section-title">
+      Education
+    </h2>
+    <ol class="timeline">
+      {education.map((t) => (
+        <li>
+          <p class="when">{t.when}</p>
+          <h3>{t.title}</h3>
+          <p class="place">{t.place}</p>
+          {t.text && <p>{t.text}</p>}
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-title">
+    <h2 id="skills-title" class="section-title">
+      Skills
+    </h2>
+    <div class="skill-groups">
+      {skills.map((s) => (
+        <div>
+          <h3>{s.group}</h3>
+          <ul class="tags">
+            {s.items.map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div>
+        <h3>Spoken languages</h3>
+        <p>{languages.join(", ")}</p>
+      </div>
+    </div>
+  </section>
+
   <section id="contact" aria-labelledby="contact-title" class="contact">
     <h2 id="contact-title" class="section-title">
       Contact
     </h2>
-    <p>Open to junior cloud, DevOps and developer roles after my Ausbildung.</p>
-    <ul class="contact-list">
-      <li>
-        <span>GitHub</span>{" "}
-        <a href="https://github.com/mehedi-hasan-2426" rel="noopener">
-          mehedi-hasan-2426
-        </a>
-      </li>
-      <li>
-        <span>LinkedIn</span> Mehedi Hasan Rahib
-      </li>
-    </ul>
+    <p>Open to junior cloud, DevOps and developer roles after my Ausbildung in 2027.</p>
+    <div class="github">
+      <GitHubTile client:visible />
+    </div>
   </section>
 </Base>

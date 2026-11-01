@@ -112,7 +112,7 @@ nav a {
   animation-delay: 140ms;
 }
 h1 {
-  font: 700 clamp(2.6rem, 8vw, 5.5rem)/1 var(--display);
+  font: 700 clamp(2.3rem, 6vw, 4rem)/1.05 var(--display);
   letter-spacing: -0.03em;
   margin: 0;
   max-width: 12ch;
@@ -176,53 +176,75 @@ h3 {
   margin: 0 0 0.5rem;
 }
 
-.bento {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-flow: row dense;
-  padding-top: 0;
+section[id] {
+  scroll-margin-top: 1rem;
 }
-.tile {
-  background: var(--card);
+.social {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0 1rem;
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 1.4rem;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
 }
-.tile h2 {
-  font: 600 0.95rem var(--body);
+.social-link.static {
+  font-weight: 500;
   color: var(--muted);
-  margin: 0 0 0.6rem;
 }
-.tile p {
-  margin: 0 0 0.5rem;
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
 }
-.tile .big {
-  font: 700 2.2rem/1.1 var(--display);
-  color: var(--teal);
+.more-projects {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.6rem;
 }
-.now {
-  grid-column: span 2;
-  background: var(--fg);
-  color: var(--bg);
-  border-color: var(--fg);
+.more-projects li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  max-width: 70ch;
 }
-.now h2 {
-  color: inherit;
-  opacity: 0.75;
+.more-projects a {
+  font-weight: 600;
 }
-.now p {
-  font: 600 clamp(1.15rem, 2.2vw, 1.45rem)/1.4 var(--display);
+.more-projects span {
+  color: var(--muted);
 }
-.tools {
-  grid-column: span 2;
+.skill-groups {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }
-.learning {
-  grid-column: 1 / -1;
-  border-left: 6px solid var(--coral);
+.skill-groups h3 {
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
 }
-.github {
-  grid-column: span 2;
+.skill-groups p {
+  margin: 0;
+}
+.contact .github {
+  margin-top: 1rem;
 }
 
 .grid {
@@ -241,12 +263,8 @@ h3 {
     border-color 200ms ease,
     transform 200ms var(--ease-out);
 }
-.card.feature {
-  border-left: 6px solid var(--teal);
-  padding: 2rem;
-}
-.card.feature h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+.grid .card:first-child {
+  border-top: 4px solid var(--teal);
 }
 .card h3 a {
   color: var(--fg);
@@ -380,17 +398,6 @@ h3 {
   margin: 0;
 }
 
-@media (max-width: 760px) {
-  .bento {
-    grid-template-columns: 1fr 1fr;
-  }
-  .now,
-  .tools,
-  .learning,
-  .github {
-    grid-column: 1 / -1;
-  }
-}
 @media (max-width: 420px) {
   nav a {
     padding: 0.6rem 0.5rem;
@@ -408,6 +415,10 @@ h3 {
   .card:hover {
     border-color: var(--teal);
     transform: translateY(-3px);
+  }
+  a.social-link:hover {
+    border-color: var(--teal);
+    color: var(--teal);
   }
 }
 @keyframes rise {
