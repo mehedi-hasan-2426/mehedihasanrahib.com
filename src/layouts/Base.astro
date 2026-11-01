@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = "Mehedi Hasan Rahib", description = "Mehedi Hasan Rahib, apprentice application developer in Essen. Cloud, DevOps and web projects with Terraform, AWS, Python and TypeScript." } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F9FA" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151a1c" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="top">
+      <a class="mark" href="/" aria-label="Home">MHR</a>
+      <nav aria-label="Main">
+        <a href="/#work">Work</a>
+        <a href="/#journey">Journey</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="foot">
+      <p>&copy; 2026 Mehedi Hasan Rahib</p>
+      <p><a href="https://github.com/mehedi-hasan-2426/mehedihasanrahib.com" rel="noopener">Source of this site</a></p>
+    </footer>
+  </body>
+</html>

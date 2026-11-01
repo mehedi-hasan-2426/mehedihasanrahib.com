@@ -1,0 +1,37 @@
+---
+import Base from "../../layouts/Base.astro";
+import { projects, type Project } from "../../data.ts";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project } = Astro.props as { project: Project };
+---
+<Base title={`${project.name} · Mehedi Hasan Rahib`} description={project.summary}>
+  <article class="project">
+    <p><a href="/#work">Back to all work</a></p>
+    <p class="status">{project.status}</p>
+    <h1>{project.name}</h1>
+    <p class="lede">{project.summary}</p>
+    <p class="links">
+      {project.live && <a class="btn" href={project.live} rel="noopener">Open live site</a>}
+      <a class={project.live ? "btn ghost" : "btn"} href={project.repo} rel="noopener">View source</a>
+    </p>
+    <section aria-labelledby="why">
+      <h2 id="why">Why</h2>
+      <p>{project.problem}</p>
+    </section>
+    <section aria-labelledby="what">
+      <h2 id="what">What I built</h2>
+      <ul>{project.built.map((b) => <li>{b}</li>)}</ul>
+    </section>
+    <section aria-labelledby="checks">
+      <h2 id="checks">How it is checked</h2>
+      <ul>{project.checks.map((c) => <li>{c}</li>)}</ul>
+    </section>
+    <section aria-labelledby="stack">
+      <h2 id="stack">Stack</h2>
+      <ul class="tags">{project.stack.map((s) => <li>{s}</li>)}</ul>
+    </section>
+  </article>
+</Base>
