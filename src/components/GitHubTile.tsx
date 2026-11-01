@@ -26,7 +26,7 @@ export default function GitHubTile() {
       animate={reduce ? { opacity: 1 } : { opacity: 1, transform: "translateY(0px)" }}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
     >
-      <p className="font-display text-teal text-4xl leading-none font-bold" data-testid="repo-count">
+      <p className="font-display text-accent text-4xl leading-none font-bold" data-testid="repo-count">
         {data.publicRepos}
       </p>
       <p className="mt-1">public repositories</p>

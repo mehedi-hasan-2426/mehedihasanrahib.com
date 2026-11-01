@@ -22,8 +22,19 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   const box = await github.boundingBox();
   expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
   expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
-  await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Education" }).click();
-  await expect(page).toHaveURL(/#education$/);
+  await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "About" }).click();
+  await expect(page).toHaveURL(/#about$/);
+  await expect(page.locator("#about")).toContainText("Hochschule Niederrhein");
+  await expect(page.locator("#learning li")).toHaveCount(3);
+  await page.locator(".intro").getByRole("link", { name: "Explore my projects" }).click();
+  await expect(page).toHaveURL(/#work$/);
+  await page.locator(".intro").getByRole("link", { name: "Let's connect" }).click();
+  await expect(page).toHaveURL(/#contact$/);
+  const og = await page.locator('meta[property="og:image"]').getAttribute("content");
+  expect(og).toBe("https://mehedihasanrahib.de/og.jpg");
+  for (const asset of ["/hero-bg.avif", "/hero-bg.webp", "/og.jpg"]) {
+    expect((await page.request.get(asset)).ok()).toBe(true);
+  }
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
   expect(errors).toEqual([]);

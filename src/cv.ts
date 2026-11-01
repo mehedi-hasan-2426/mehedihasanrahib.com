@@ -30,8 +30,23 @@ export const education = [
 
 export const skills = [
   { group: "Cloud and infrastructure", items: ["AWS", "Terraform", "Docker"] },
-  { group: "Pipelines and security", items: ["Azure DevOps", "GitHub Actions", "TFLint", "Trivy"] },
-  { group: "Languages and tools", items: ["Python", "PowerShell", "TypeScript", "SQL", "Bash", "Git"] },
+  { group: "CI/CD and security", items: ["Azure DevOps", "GitHub Actions", "TFLint", "Trivy"] },
+  { group: "Development and databases", items: ["Python", "PowerShell", "TypeScript", "SQL", "Bash", "Git"] },
 ];
 
 export const languages = ["Bengali", "English", "German"];
+
+export const learning = [
+  {
+    title: "AWS Certified Cloud Practitioner",
+    text: "Preparing for the exam with the question trainer I built for it.",
+  },
+  {
+    title: "IHK final exam, part 2",
+    text: "Software design, object-oriented programming, SQL and algorithms, due in 2027.",
+  },
+  {
+    title: "Go",
+    text: "Writing the BeaconForge service in Go to learn its tooling and testing.",
+  },
+];

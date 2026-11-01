@@ -3,26 +3,72 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import GitHubTile from "../components/GitHubTile.tsx";
 import Icon from "../components/Icon.astro";
-import { education, experience, languages, skills } from "../cv.ts";
+import { education, experience, languages, learning, skills } from "../cv.ts";
 const all = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
 const featured = all.slice(0, 3);
 const more = all.slice(3);
 ---
 
 <Base>
+  <link slot="head" rel="preload" as="image" href="/hero-bg.avif" type="image/avif" fetchpriority="high" />
+  <div slot="backdrop" class="backdrop" aria-hidden="true"></div>
   <section class="intro">
     <h1>Mehedi Hasan Rahib</h1>
+    <p class="role">Application developer apprentice, cloud and DevOps</p>
     <p class="lede">
-      Apprentice application developer in Essen, working in a cloud platform team. I build infrastructure with Terraform
-      on AWS, CI pipelines with security checks, and small apps that people use.
+      I build infrastructure with Terraform on AWS, CI pipelines with security checks, and small tested apps.
     </p>
-    <ul class="social" aria-label="Profiles">
-      <li>
-        <a class="icon-link" href="https://github.com/mehedi-hasan-2426" rel="noopener" aria-label="GitHub profile">
-          <Icon name="github" />
-        </a>
-      </li>
-    </ul>
+    <div class="hero-actions">
+      <a class="btn" href="#work">
+        Explore my projects
+      </a>
+      <a class="btn ghost" href="#contact">
+        Let's connect
+      </a>
+      <a class="icon-link" href="https://github.com/mehedi-hasan-2426" rel="noopener" aria-label="GitHub profile">
+        <Icon name="github" />
+      </a>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-title" class="reveal">
+    <h2 id="about-title" class="section-title">
+      About
+    </h2>
+    <div class="about-text">
+      <p>
+        After the Studienkolleg at Hochschule Anhalt I studied biotechnology at Hochschule Niederrhein from 2021 to
+        2023, then moved into IT. Since November 2024 I have been training as an application developer in a cloud
+        platform team at RWE Supply &amp; Trading in Essen.
+      </p>
+      <p>
+        At work I write Terraform for AWS, maintain Azure DevOps pipelines, add security scanning and automate server
+        patching. Outside work I build small, tested projects to practise what my job does not cover yet, from a German
+        learning app to a patch compliance reporter.
+      </p>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-title" class="reveal">
+    <h2 id="skills-title" class="section-title">
+      Tech stack
+    </h2>
+    <div class="skill-groups">
+      {skills.map((s) => (
+        <div>
+          <h3>{s.group}</h3>
+          <ul class="tags">
+            {s.items.map((i) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div>
+        <h3>Spoken languages</h3>
+        <p>{languages.join(", ")}</p>
+      </div>
+    </div>
   </section>
 
   <section id="work" aria-labelledby="work-title">
@@ -53,7 +99,7 @@ const more = all.slice(3);
     )}
   </section>
 
-  <section id="experience" aria-labelledby="experience-title">
+  <section id="experience" aria-labelledby="experience-title" class="reveal">
     <h2 id="experience-title" class="section-title">
       Experience
     </h2>
@@ -69,7 +115,7 @@ const more = all.slice(3);
     </ol>
   </section>
 
-  <section id="education" aria-labelledby="education-title">
+  <section id="education" aria-labelledby="education-title" class="reveal">
     <h2 id="education-title" class="section-title">
       Education
     </h2>
@@ -85,26 +131,18 @@ const more = all.slice(3);
     </ol>
   </section>
 
-  <section id="skills" aria-labelledby="skills-title">
-    <h2 id="skills-title" class="section-title">
-      Skills
+  <section id="learning" aria-labelledby="learning-title" class="reveal">
+    <h2 id="learning-title" class="section-title">
+      Currently learning
     </h2>
-    <div class="skill-groups">
-      {skills.map((s) => (
-        <div>
-          <h3>{s.group}</h3>
-          <ul class="tags">
-            {s.items.map((i) => (
-              <li>{i}</li>
-            ))}
-          </ul>
-        </div>
+    <ul class="learning-list">
+      {learning.map((l) => (
+        <li>
+          <h3>{l.title}</h3>
+          <p>{l.text}</p>
+        </li>
       ))}
-      <div>
-        <h3>Spoken languages</h3>
-        <p>{languages.join(", ")}</p>
-      </div>
-    </div>
+    </ul>
   </section>
 
   <section id="contact" aria-labelledby="contact-title" class="contact">
