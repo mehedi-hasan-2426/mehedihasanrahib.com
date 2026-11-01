@@ -15,7 +15,7 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   await expect(page.locator("#education")).toContainText("Hochschule Anhalt");
   await expect(page.locator("#experience")).toContainText("ongoing until 2027");
   await expect(page.locator('a[href*="linkedin"]')).toHaveCount(0);
-  await expect(page.locator(".social")).toContainText("LinkedIn: Mehedi Hasan Rahib");
+  await expect(page.locator(".intro .social")).toContainText("LinkedIn: Mehedi Hasan Rahib");
   const github = page.getByRole("link", { name: "GitHub", exact: true });
   await expect(github).toHaveAttribute("href", "https://github.com/mehedi-hasan-2426");
   await expect(github.locator("svg.icon")).toHaveAttribute("aria-hidden", "true");
