@@ -1,0 +1,23 @@
+---
+name: BeaconForge
+summary: A local DORA metrics service with durable ingestion and project isolation.
+status: Work in progress
+stack: [Go, Python, Docker]
+repo: https://github.com/mehedi-hasan-2426/beaconforge
+order: 3
+---
+
+## Why
+
+DORA metrics are only useful when you can see which events they are based on and what is missing.
+
+## What I built
+
+- HTTP API with an OpenAPI description
+- Durable event ingestion separated per project
+- Explicit evidence coverage so gaps stay visible
+
+## How it is checked
+
+- Go and Python tests
+- Container build
