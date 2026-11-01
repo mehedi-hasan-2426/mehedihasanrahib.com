@@ -15,6 +15,33 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("GitHub tile hydrates from the prerendered Hono API without CSP errors", async ({ page }) => {
+  const problems: string[] = [];
+  page.on("console", (m) => { if (m.type() === "error") problems.push(m.text()); });
+  page.on("pageerror", (e) => problems.push(e.message));
+  const api = await page.request.get("/api/github.json");
+  expect(api.ok()).toBe(true);
+  const data = await api.json();
+  await page.goto("/");
+  const tile = page.locator(".tile.github");
+  await tile.scrollIntoViewIfNeeded();
+  if (typeof data.publicRepos === "number") {
+    await expect(tile.getByTestId("repo-count")).toHaveText(String(data.publicRepos));
+  } else {
+    await expect(tile).toContainText("public on GitHub");
+  }
+  expect(problems).toEqual([]);
+});
+
+test("MDX project page renders its sections and sitemap lists it", async ({ page }) => {
+  await page.goto("/projects/patchpulse");
+  for (const name of ["Why", "What I built", "How it is checked"]) {
+    await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
+  }
+  const sitemap = await (await page.request.get("/sitemap-0.xml")).text();
+  expect(sitemap).toContain("https://mehedihasanrahib.de/projects/patchpulse/");
+});
+
 test("project card opens its detail page", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Sprungbrett Deutsch" }).click();

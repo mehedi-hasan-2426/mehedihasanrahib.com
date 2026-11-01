@@ -1,0 +1,28 @@
+---
+name: Sprungbrett Deutsch
+summary: German practice for A2 learners. Exercises check answers right away, and guests can try it without an account.
+status: Live
+stack: [Next.js, TypeScript, NextAuth, Neon Postgres, Vercel]
+repo: https://github.com/mehedi-hasan-2426/sprungbrett-deutsch
+live: https://sprung.mehedihasanrahib.de
+order: 1
+featured: true
+---
+
+## Why
+
+Learners preparing for A2 need short daily practice with instant feedback, not a pile of PDFs.
+
+## What I built
+
+- 12 weekly units with vocabulary, grammar, reading, speaking, writing and quizzes
+- Google sign-in for approved accounts plus a guest mode that keeps progress in the browser
+- Progress sync to Postgres with session ownership, origin checks and versioned saves
+- Flashcards with spaced repetition and a writing area with model texts and self-assessment
+
+## How it is checked
+
+- Unit and content tests
+- Playwright tests on desktop and phone
+- Strict CSP checked on every build
+- CodeQL and secret scanning in CI
