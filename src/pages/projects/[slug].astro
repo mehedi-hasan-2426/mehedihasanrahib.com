@@ -11,24 +11,41 @@ const { Content } = await render(project);
 const p = project.data;
 ---
 
-<Base title={`${p.name} · Mehedi Hasan Rahib`} description={p.summary}>
+<Base title={`${p.name} | Mehedi Hasan Rahib`} description={p.summary}>
   <article class="project">
     <p>
       <a href="/#work">Back to all work</a>
     </p>
-    <p class="status">{p.status}</p>
+    <p class="badge" data-tone={p.status === "Live" ? "live" : p.status === "Work in progress" ? "wip" : "learning"}>
+      {p.status}
+    </p>
     <h1>{p.name}</h1>
     <p class="lede">{p.summary}</p>
     <p class="links">
       {p.live && (
         <a class="btn" href={p.live} rel="noopener">
-          Open live site
+          Live demo
         </a>
       )}
       <a class={p.live ? "btn ghost" : "btn"} href={p.repo} rel="noopener">
-        View source
+        GitHub
       </a>
     </p>
+    {p.image && (
+      <figure class="shot">
+        <img src={p.image} alt={p.imageAlt ?? ""} width={p.imageWidth} height={p.imageHeight} decoding="async" />
+      </figure>
+    )}
+    {p.architecture && (
+      <section aria-labelledby="arch">
+        <h2 id="arch">Architecture</h2>
+        <ol class="flow">
+          {p.architecture.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+      </section>
+    )}
     <div class="prose-body">
       <Content />
     </div>

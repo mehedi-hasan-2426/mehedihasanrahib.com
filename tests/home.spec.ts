@@ -5,15 +5,25 @@ test("home shows name, projects and working anchors", async ({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Mehedi Hasan Rahib");
-  await expect(page.locator("#work article")).toHaveCount(3);
-  await expect(page.locator(".more-projects li")).toHaveCount(2);
+  await expect(page.locator(".featured-project")).toHaveCount(2);
+  await expect(page.locator(".minor-project")).toHaveCount(3);
+  for (const img of await page.locator(".featured-project img").all()) {
+    await img.scrollIntoViewIfNeeded();
+    await expect(img).toHaveJSProperty("complete", true);
+    expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
+    expect(await img.getAttribute("alt")).not.toBe("");
+  }
+  await expect(page.locator(".featured-project").first().getByRole("link", { name: "Live demo" })).toHaveAttribute("href", "https://sprung.mehedihasanrahib.de");
+  await expect(page.locator("#skills [data-use=work]").first()).toBeVisible();
+  await expect(page.locator(".availability")).toContainText("2027");
+  await expect(page).toHaveTitle(/Software developer, cloud and DevOps/);
   await expect(page.locator("#experience .timeline li")).toHaveCount(1);
   await expect(page.locator("#education .timeline li")).toHaveCount(3);
   await expect(page.locator("#education")).toContainText("Biotechnology studies, discontinued");
   await expect(page.locator("#education")).toContainText("Hochschule Niederrhein");
   await expect(page.locator("#education")).toContainText("Studienkolleg");
   await expect(page.locator("#education")).toContainText("Hochschule Anhalt");
-  await expect(page.locator("#experience")).toContainText("ongoing until 2027");
+  await expect(page.locator("#experience")).toContainText("Nov 2024 – 2027, ongoing");
   await expect(page.locator('a[href*="linkedin"]')).toHaveCount(0);
   const github = page.locator(".intro").getByRole("link", { name: "GitHub profile", exact: true });
   await expect(github).toHaveAttribute("href", "https://github.com/mehedi-hasan-2426");
@@ -67,12 +77,14 @@ test("MDX project page renders its sections and sitemap lists it", async ({ page
   expect(sitemap).toContain("https://mehedihasanrahib.de/projects/patchpulse/");
 });
 
-test("project card opens its detail page", async ({ page }) => {
+test("case study link opens the project page with architecture", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Sprungbrett Deutsch" }).click();
+  await page.locator('[data-project="sprungbrett-deutsch"]').getByRole("link", { name: "Case study" }).click();
   await expect(page).toHaveURL(/\/projects\/sprungbrett-deutsch\/?$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sprungbrett Deutsch");
-  await expect(page.getByRole("link", { name: "View source" })).toHaveAttribute("href", /github\.com\/mehedi-hasan-2426\/sprungbrett-deutsch/);
+  await expect(page.getByRole("link", { name: "GitHub", exact: true })).toHaveAttribute("href", /github\.com\/mehedi-hasan-2426\/sprungbrett-deutsch/);
+  await expect(page.getByRole("heading", { level: 2, name: "Architecture" })).toBeVisible();
+  await expect(page).toHaveTitle("Sprungbrett Deutsch | Mehedi Hasan Rahib");
 });
 
 test("unknown page shows 404", async ({ page }) => {
