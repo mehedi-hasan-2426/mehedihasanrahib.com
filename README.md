@@ -54,3 +54,7 @@ npm test
 ```
 
 If the browser download is blocked, use an installed browser: `$env:PW_CHANNEL="msedge"; npm test`.
+
+Keyboard checks cover the home page, project pages and 404 page. Pressing Tab first
+reveals "Skip to content"; Enter moves focus into the main content without adding
+the main container to the normal tab order.

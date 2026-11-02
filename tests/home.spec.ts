@@ -133,8 +133,12 @@ test("external links are https", async ({ page }) => {
 });
 
 test("skip link and focus are visible from the keyboard", async ({ page }) => {
-  await page.goto("/");
-  await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
-  await expect(page.getByRole("link", { name: "Skip to content" })).toBeInViewport();
+  for (const path of ["/", "/projects/patchpulse", "/nope"]) {
+    await page.goto(path);
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+    await expect(page.getByRole("link", { name: "Skip to content" })).toBeInViewport();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("main")).toBeFocused();
+  }
 });
