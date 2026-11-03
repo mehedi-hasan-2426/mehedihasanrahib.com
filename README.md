@@ -28,8 +28,12 @@ Behind a TLS-inspecting proxy the build-time GitHub fetch may fail; set `$env:NO
 ## Automation
 
 - CI runs on every push and pull request, and every Monday by cron, so a broken dependency shows up even without commits.
-- Dependabot opens weekly pull requests for npm packages and GitHub Actions.
-- `dependabot-automerge.yml` turns on auto-merge for minor and patch updates. They merge only after the required `browser tests` check passes. Major updates stay open for a manual look.
+- [Renovate](renovate.json) replaces Dependabot version updates once the
+  [GitHub App](https://github.com/apps/renovate) is installed for this repository.
+  Routine updates are grouped by package manager before 06:00 Monday, Europe/Berlin,
+  with a three-day release-age delay. Vulnerability PRs bypass that delay and schedule.
+- All updates need manual review and passing checks. Major updates additionally need
+  Dependency Dashboard approval. Keep Dependabot alerts and existing security scans enabled.
 
 ## Icons
 
