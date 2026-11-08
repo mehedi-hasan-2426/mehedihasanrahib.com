@@ -32,14 +32,14 @@
     "@astrojs/mdx": "8.1.2",
     "@astrojs/react": "7.1.2",
     "@astrojs/sitemap": "3.7.4",
-    "@astrojs/vercel": "11.0.17",
-    "@tailwindcss/vite": "4.3.3",
-    "astro": "7.4.4",
+    "@astrojs/vercel": "11.0.18",
+    "@tailwindcss/vite": "4.3.4",
+    "astro": "7.4.5",
     "hono": "4.13.16",
-    "motion": "14.9.0",
+    "motion": "14.9.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "tailwindcss": "4.3.3"
+    "tailwindcss": "4.3.4"
   },
   "overrides": {
     "@vercel/cli-config": {
