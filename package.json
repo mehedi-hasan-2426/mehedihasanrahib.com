@@ -34,7 +34,7 @@
     "@astrojs/sitemap": "3.7.4",
     "@astrojs/vercel": "11.0.18",
     "@tailwindcss/vite": "4.3.4",
-    "astro": "7.4.5",
+    "astro": "7.4.12",
     "hono": "4.13.16",
     "motion": "14.9.1",
     "react": "19.3.1",
